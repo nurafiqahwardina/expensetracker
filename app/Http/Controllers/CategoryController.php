@@ -18,4 +18,17 @@ class CategoryController extends Controller
         return view('categories.create');
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name'  => 'required|string|max:255|unique:categories,name',
+            'color' => 'required',
+        ]);
+
+        Category::create($request->only('name', 'color'));
+
+        return redirect()->route('categories.index')
+            ->with('success', 'Category added successfully!');
+    }
+
 }
