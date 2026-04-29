@@ -25,4 +25,20 @@ class ExpenseController extends Controller
         return view('expenses.create', compact('categories'));
     }
 
+    public function store(Request $request)
+    {
+    $request->validate([
+        'category_id' => 'required|exists:categories,id',
+        'title'       => 'required|string|max:255',
+        'amount'      => 'required|numeric|min:0',
+        'description' => 'nullable|string',
+        'date'        => 'required|date',
+    ]);
+
+    Expense::create($request->all());
+
+    return redirect()->route('expenses.index')
+        ->with('success', 'Expense added successfully!');
+    }
+
 }
