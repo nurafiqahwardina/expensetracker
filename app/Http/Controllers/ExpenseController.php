@@ -41,4 +41,10 @@ class ExpenseController extends Controller
         ->with('success', 'Expense added successfully!');
     }
 
+    public function edit(Expense $expense)
+    {
+    $categories = Category::all();
+    return view('expenses.edit', compact('expense', 'categories'));
+    }
+
 }

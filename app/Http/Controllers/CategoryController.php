@@ -31,4 +31,10 @@ class CategoryController extends Controller
             ->with('success', 'Category added successfully!');
     }
 
+    public function edit(Category $category)
+    {
+        $categories = Category::all();
+        return view('categories.edit', compact('category', 'categories'));
+    }
+
 }
