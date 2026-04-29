@@ -31,4 +31,9 @@ class CategoryController extends Controller
             ->with('success', 'Category added successfully!');
     }
 
+    public function edit(Category $category)
+    {
+        return view('categories.edit', compact('category'));
+    }
+
 }
