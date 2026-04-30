@@ -47,4 +47,20 @@ class ExpenseController extends Controller
     return view('expenses.edit', compact('expense', 'categories'));
     }
 
+    public function update(Request $request, Expense $expense)
+    {
+    $request->validate([
+        'category_id' => 'required|exists:categories,id',
+        'title'       => 'required|string|max:255',
+        'amount'      => 'required|numeric|min:0',
+        'description' => 'nullable|string',
+        'date'        => 'required|date',
+    ]);
+
+    $expense->update($request->all());
+
+    return redirect()->route('expenses.index')
+        ->with('success', 'Expense updated successfully!');
+    }
+
 }
