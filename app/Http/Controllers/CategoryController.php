@@ -37,4 +37,17 @@ class CategoryController extends Controller
         return view('categories.edit', compact('category', 'categories'));
     }
 
+    public function update(Request $request, Category $category)
+    {
+    $request->validate([
+        'name'  => 'required|string|max:255|unique:categories,name,' . $category->id,
+        'color' => 'required',
+    ]);
+
+    $category->update($request->only('name', 'color'));
+
+    return redirect()->route('categories.index')
+        ->with('success', 'Category updated successfully!');
+    }
+
 }
